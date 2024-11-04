@@ -51,7 +51,7 @@ interface IServiceHub {
         uint256[] memory activeProviders
     );
 
-    function getSubscriberBalance(uint256 subscriberId) external view returns (uint256);
+    function getSubscriberBalance(uint256 subscriberId) external view returns (uint256 balance);
 
     function getSubscriberDepositValueUSD(uint256 subscriberId) external view returns (uint256);
 }

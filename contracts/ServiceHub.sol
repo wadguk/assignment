@@ -92,8 +92,7 @@ contract ServiceHub is IServiceHub, UUPSUpgradeable, OwnableUpgradeable {
      * @param providerId The unique identifier of the provider to be removed.
      */
     function removeProvider(uint256 providerId) external onlyProviderOwner(providerId) {
-        Provider storage provider = _providers[providerId];
-        token.transfer(provider.owner, provider.balance);
+        token.transfer(_providers[providerId].owner, _providers[providerId].balance);
         delete _providers[providerId];
         providerCount--;
 
@@ -214,13 +213,12 @@ contract ServiceHub is IServiceHub, UUPSUpgradeable, OwnableUpgradeable {
         bool isActive,
         uint256[] memory activeSubscribers
     ) {
-        Provider storage provider = _providers[providerId];
         return (
-            provider.owner,
-            provider.feePerSecond,
-            provider.balance,
-            provider.isActive,
-            EnumerableSet.values(provider.activeSubscribers)
+            _providers[providerId].owner,
+            _providers[providerId].feePerSecond,
+            _providers[providerId].balance,
+            _providers[providerId].isActive,
+            EnumerableSet.values(_providers[providerId].activeSubscribers)
         );
     }
 
@@ -276,23 +274,17 @@ contract ServiceHub is IServiceHub, UUPSUpgradeable, OwnableUpgradeable {
      * @param subscriberId The unique identifier for the subscriber.
      * @return balance The total balance of the subscriber, represented in the smallest unit of the token.
      */
-    function getSubscriberBalance(uint256 subscriberId) public view returns (uint256) {
-        Subscriber storage subscriber = _subscribers[subscriberId];
-
-        uint256 balance;
-        for (uint i = 0; i < EnumerableSet.length(subscriber.activeProviders); i++) {
-            uint256 providerId = EnumerableSet.at(subscriber.activeProviders, i);
+    function getSubscriberBalance(uint256 subscriberId) public view returns (uint256 balance) {
+        for (uint i = 0; i < EnumerableSet.length(_subscribers[subscriberId].activeProviders); i++) {
+            uint256 providerId = EnumerableSet.at(_subscribers[subscriberId].activeProviders, i);
             
             // Check if the subscription is still active
-            if (subscriber.subscriptionDueDate[providerId] > block.timestamp) {
-                uint256 remainingTime = subscriber.subscriptionDueDate[providerId] - block.timestamp;
+            if (_subscribers[subscriberId].subscriptionDueDate[providerId] > block.timestamp) {
+                uint256 remainingTime = _subscribers[subscriberId].subscriptionDueDate[providerId] - block.timestamp;
                 uint256 providerFeePerSecond = _providers[providerId].feePerSecond;
-                
-                // Calculate the remaining balance for this provider's subscription
                 balance += remainingTime * providerFeePerSecond;
             }
         }
-        return balance;
     }
 
     // solc-ignore-next-line func-mutability unused-param
