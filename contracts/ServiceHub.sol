@@ -30,15 +30,15 @@ contract ServiceHub is IServiceHub, UUPSUpgradeable, OwnableUpgradeable {
         address owner;
         uint256 feePerSecond;
         uint256 balance;
-        EnumerableSet.UintSet activeSubscribers;
         bool isActive;
+        EnumerableSet.UintSet activeSubscribers;
     }
 
     struct Subscriber {
         address owner;
-        EnumerableSet.UintSet activeProviders;           
-        mapping(uint256 => uint256) subscriptionDueDate;         // providerId -> timestamp
         bool isPaused;
+        EnumerableSet.UintSet activeProviders;
+        mapping(uint256 => uint256) subscriptionDueDate;
     }
 
     mapping(uint256 => Provider) private _providers;
