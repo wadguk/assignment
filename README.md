@@ -23,10 +23,11 @@ npx hardhat test
 1. Presenting the subscriber balance within the contract (getSubscriberBalance). Instead, I’d calculate it off-chain or not use it at all, relying only on the subscription due date.
 
 # TODO
-1. Add custom errors to reduce gas cost.
-2. Add pause/resume subscription functionality by counting total paused time to renew subscriptions later.
-3. Add functionality to choose another payment token with different decimals (DAI used now).
-4. Add unsubscribe functionality.
+1. Add pause/resume subscription functionality by counting total paused time to renew subscriptions later.
+2. Add functionality to choose another payment token with different decimals (DAI used now).
+3. Add unsubscribe functionality.
+4. Add custom errors to reduce gas cost.
+5. Get rid of modifiers, use private function instead to reduce deployment gas cost.
 
 # BONUS SECTION
 1. **Balance Management:** Currently, the subscription model divides the monthly fee into per-second charges (feePerSecond). This could be adapted to allow for smaller, more flexible billing intervals such as daily or hourly.  When a user deposits tokens, the contract can calculate the duration of the subscription based on their deposit amount. This allows more granular billing.
