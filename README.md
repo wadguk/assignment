@@ -25,7 +25,7 @@ npx hardhat test
 # TODO
 1. Add custom errors to reduce gas cost.
 2. Add pause/resume subscription functionality by counting total paused time to renew subscriptions later.
-3. Add functionality to choose payment token.
+3. Add functionality to choose another payment token with different decimals (DAI used now).
 4. Add unsubscribe functionality.
 
 # BONUS SECTION
