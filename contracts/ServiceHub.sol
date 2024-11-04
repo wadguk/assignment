@@ -240,20 +240,21 @@ contract ServiceHub is IServiceHub, UUPSUpgradeable, OwnableUpgradeable {
      * @param subscriberId The unique identifier for the subscriber.
      * @return owner The address of the subscriber's owner.
      * @return balance The total balance of the subscriber.
-     * @return activeProviders The count of active providers for the subscriber.
      * @return isPaused The paused status of the subscriber.
+     * @return activeProviders The count of active providers for the subscriber.
      */
     function getSubscriberState(uint256 subscriberId) external view returns (
         address owner,
         uint256 balance,
-        uint256[] memory activeProviders,
-        bool isPaused
+        bool isPaused,
+        uint256[] memory activeProviders
+
     ) {
         return (
             _subscribers[subscriberId].owner,
             getSubscriberBalance(subscriberId),
-            EnumerableSet.values(_subscribers[subscriberId].activeProviders),
-            _subscribers[subscriberId].isPaused
+            _subscribers[subscriberId].isPaused,
+            EnumerableSet.values(_subscribers[subscriberId].activeProviders)
         );
     }
     

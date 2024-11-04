@@ -47,8 +47,8 @@ interface IServiceHub {
     function getSubscriberState(uint256 subscriberId) external view returns (
         address owner,
         uint256 balance,
-        uint256[] memory activeProviders,
-        bool isPaused
+        bool isPaused,
+        uint256[] memory activeProviders
     );
 
     function getSubscriberBalance(uint256 subscriberId) external view returns (uint256);
