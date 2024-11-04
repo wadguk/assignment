@@ -20,7 +20,7 @@ contract ServiceHub is IServiceHub, UUPSUpgradeable, OwnableUpgradeable {
 
     uint256 public constant MIN_PROVIDER_FEE_USD = 50 * 1e18;   // $50 in USD
     uint256 public constant MAX_PROVIDERS = 200;                // No need in this implementation
-    uint256 public constant MAX_SUBSCRIBED_PROVIDERS = 20;      // To avoid problems with gas
+    uint256 public constant MAX_SUBSCRIBED_PROVIDERS = 20;      // To avoid problems with gas when getting balance
     uint256 public constant MONTH_IN_SECONDS = 86400 * 30;
     
     bool public upgradesDisabledOnce;   
